@@ -105,11 +105,8 @@ public class WeatherActivity extends AppCompatActivity {
 
         if (weatherString != null) {
             //有缓存时直接解析数据
-            //showWeatherInfo(weatherString);
+            showWeatherInfo(weatherString);
 
-            String weather_id = getIntent().getStringExtra("weather_id");
-            weatherLayout.setVisibility(View.INVISIBLE);
-            requestWeather(weather_id);
         } else {
             //没有缓存时去服务器查询数据
             String weather_id = getIntent().getStringExtra("weather_id");
