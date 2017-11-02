@@ -10,6 +10,9 @@
     这个属性设置为true表示为系统状态栏留出空间
     -->
 
+    <!--swipeRefresh外面又嵌套一层DrawerLayout.DrawerLayout的第一个子控件用于作为主屏幕的显示内容-->
+    <!--第二个子控件用于作为滑动菜单中显示的内容，这里在第二个子控件的位置添加了之前建立的ChooseAreaFragment碎片-->
+
     <ImageView
         android:id="@+id/bing_pic_img"
         android:layout_width="match_parent"
@@ -18,27 +21,51 @@
 
         />
 
-    <ScrollView
-        android:id="@+id/weather_layout"
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:layout_height="match_parent">
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swiperefresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ScrollView
+                android:id="@+id/weather_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none">
 
-        <LinearLayout
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fitsSystemWindows="true"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/title" />
+
+                    <include layout="@layout/now" />
+
+                    <include layout="@layout/forecast" />
+
+                    <include layout="@layout/aqi" />
+
+                    <include layout="@layout/suggestion" />
+                </LinearLayout>
+            </ScrollView>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <fragment
+            android:id="@+id/choose_area_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:orientation="vertical">
+            android:name="com.ly.coolweather.fragment.ChooseAreaFragment"
+            android:layout_gravity="start"
+            />
 
-            <include layout="@layout/title" />
+    </android.support.v4.widget.DrawerLayout>
 
-            <include layout="@layout/now" />
 
-            <include layout="@layout/forecast" />
 
-            <include layout="@layout/aqi" />
 
-            <include layout="@layout/suggestion" />
-        </LinearLayout>
-    </ScrollView>
 </FrameLayout>

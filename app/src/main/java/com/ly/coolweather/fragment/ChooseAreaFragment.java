@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ly.coolweather.MainActivity;
 import com.ly.coolweather.R;
 import com.ly.coolweather.WeatherActivity;
 import com.ly.coolweather.db.City;
@@ -116,9 +117,18 @@ public class ChooseAreaFragment extends Fragment {
                 } else if (currentLevel == LEVEL_COUNTY) {
                     selectedCounty = countyList.get(position);
                     String weather_id = selectedCounty.getWeatherId();
-                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
-                    intent.putExtra("weather_id", weather_id);
-                    startActivity(intent);
+
+                    if (getActivity() instanceof MainActivity){
+                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                        intent.putExtra("weather_id", weather_id);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }else if (getActivity() instanceof  WeatherActivity){
+                        WeatherActivity activity = (WeatherActivity) getActivity();
+                        activity.drawer_layout.closeDrawers();
+                        activity.swiperefresh.setRefreshing(true);
+                        activity.requestWeather(weather_id);
+                    }
                 }
             }
         });
